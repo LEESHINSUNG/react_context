@@ -2,7 +2,17 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+import { useTheme, themes } from '../lib/ThemeContext'
+
 export default function Home() {
+  const { theme, setTheme } = useTheme()
+
+  const toggleTheme = () => {
+    console.log("theme",theme);
+    console.log("themes",themes);
+    setTheme(theme === themes.dark ? themes.light : themes.dark)
+  }
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -12,6 +22,16 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <button
+          style={{
+            backgroundColor: theme?.background,
+            height: 36,
+            width: 256,
+          }}
+          onClick={toggleTheme}
+        >
+          ThemeContext Toggle
+        </button>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
@@ -64,6 +84,8 @@ export default function Home() {
           </span>
         </a>
       </footer>
+
     </div>
+
   )
 }
